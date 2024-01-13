@@ -1,0 +1,22 @@
+ready {
+    int x_1;
+    int y_2;
+    y_2=10;
+    x_1= y_2;
+    while(x_1==10){
+	Write "x";
+	x_1=12;
+    };
+    if(x_1==10){
+	Write "hi";
+	Write "hh";
+	if(y_2==10){
+	   Write "yumi";
+	};
+    };
+    Write x_1;
+    Write y_2;
+    Write "Hola Como";
+    Write "Estas";
+}
+end

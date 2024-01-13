@@ -179,6 +179,7 @@ Write_content: COMMILLA Output_text COMMILLA {
 Output_text: TEXT{strcpy(&lines,&$1);}
 			|Output_text TEXT {$$ = strcat(lines, $2); free($2);}
 			;
+//funcionamiento de las condiciones del while
 conditions: IDENTIFIER{
 				char variable[100];
 				sprintf(variable,"%s",$1);

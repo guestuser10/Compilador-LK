@@ -1,6 +1,7 @@
 //
 // Created by khrisna on 05/01/2024.
 //esta cosa explotara en un momento jejejejajjajasjjjejjej
+//  Arbolzeinador.h se encarga de las tareas que hacen posible la ejecucion del while
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -8,6 +9,7 @@
 #include "Split.h"
 #ifndef PRUEBACOMPILADOR_ARBOLZEINADOR_H
 #define PRUEBACOMPILADOR_ARBOLZEINADOR_H
+//definicion de estructuras
 typedef struct Statement_While {
     char* type;
     char* value;
@@ -71,7 +73,7 @@ ASTNode *createNode(char* type, char* value, ASTNode* condition, Statement_While
 //    }
 //}
 struct TreeNode* Find = NULL;
-
+//validacion de la condicion
 int evaluateCondition(ASTNode* node) {
     // Simulated condition evaluation - For simplicity, assuming conditions are of the form "variable == number"
     if (node && node->condition && node->condition->type && node->condition->value) {
@@ -83,6 +85,7 @@ int evaluateCondition(ASTNode* node) {
     }
     return 0; // Default condition result (false)
 }
+// ejecucion del body
 void executeBody(Statement_While* body,LIST *list) {
     if(body!=NULL){
         if(body->type=="PRNT"){
@@ -128,10 +131,11 @@ void executeBody_var(Statement_While* body,LIST *list,struct TreeNode *root) {
         }
     }
 }
+//liberador de memoria
 void DestruirNodo(LIST* node){
     free(node);
 }
-
+//rejecucion del while
 void executeWhileLoop(LIST * node) {
     ASTNode *NODO=NULL;
     NODO=node->while_body;
@@ -151,6 +155,7 @@ void executeWhileLoop(LIST * node) {
         executeWhileLoop( node);
     }
 }
+
 int evaluateCondition_whit_var(ASTNode* node,struct TreeNode *node_tree) {
     // Simulated condition evaluation - For simplicity, assuming conditions are of the form "variable == number"
     if (node && node->condition && node->condition->type && node->condition->value) {
@@ -171,6 +176,7 @@ int evaluateCondition_whit_var(ASTNode* node,struct TreeNode *node_tree) {
     }
     return 0; // Default condition result (false)
 }
+// ejecucion del contenido del while cuando la condicion es verdadera
 void executeWhileLoop_variable(LIST * node,struct TreeNode *node_tree) {
     ASTNode *NODO=NULL;
     NODO=node->while_body;
@@ -194,6 +200,7 @@ void executeWhileLoop_variable(LIST * node,struct TreeNode *node_tree) {
         executeWhileLoop_variable( node,node_tree);
     }
 }
+//orden de ejecucion de las instrucciones
 LIST *CreateLISTNEXT(LIST *list,ASTNode *Corp){
     LIST *newNODE, *aux;
     newNODE= (LIST*) malloc(sizeof(LIST));
@@ -214,6 +221,7 @@ LIST *CreateLISTNEXT(LIST *list,ASTNode *Corp){
     puntero = newNODE;
     return list;
 }
+//creacion de nodos de instrucciones
 Statement_While *createBodyWhile(Statement_While *body,char* type, char* value){
     Statement_While *newNODE, *aux;
     newNODE= (Statement_While*) malloc(sizeof(Statement_While));
@@ -233,6 +241,7 @@ Statement_While *createBodyWhile(Statement_While *body,char* type, char* value){
     }
     return body;
 }
+//orden de ejecucion interno del while
 ASTNode *createBodyWhile_INAST(ASTNode *body,char* type,char* value){
     Statement_While *newNODE, *aux;
     newNODE= (Statement_While*) malloc(sizeof(Statement_While));

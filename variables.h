@@ -3,6 +3,7 @@
 #include <string.h>
 #ifndef COMPILERAURORA_VARIABLES_H
 #define COMPILERAURORA_VARIABLES_H
+//definicion de las estructuras de datos
 struct TreeNode {
     char* variable_name;
     char data_type;
@@ -57,16 +58,16 @@ struct TreeNode* createTreeNode(char* name, char type, void* value) {
     return newNode;
 }
 
-
+//liberador de memoria por que si no a C le da ansiedad
 void freeTreeNode(struct TreeNode* node) {
     free(node->variable_name);
     free(node);
 }
-
+//parte de la busqueda
 int compareNames(const char* name1, const char* name2) {
     return strcmp(name1, name2);
 }
-
+//insertar nodos
 struct TreeNode* insertNode(struct TreeNode* root, struct TreeNode* newNode) {
     if (root == NULL) {
         return newNode;
@@ -81,6 +82,7 @@ struct TreeNode* insertNode(struct TreeNode* root, struct TreeNode* newNode) {
 
     return root;
 }
+//creacion de los nodos sin valor
 struct TreeNode* insertNodeWithoutV(struct TreeNode* root,char* name, char type) {
     if (root == NULL) {
         return createTreeNodeWithoutVal(name,type);
@@ -95,6 +97,7 @@ struct TreeNode* insertNodeWithoutV(struct TreeNode* root,char* name, char type)
 
     return root;
 }
+//resto de la busqueda
 struct TreeNode* Find_Val(struct TreeNode* root, char* Variable){
     int compare = strcmp(Variable,root->variable_name);
     if(root == NULL || compare==0){

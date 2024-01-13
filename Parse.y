@@ -5,6 +5,7 @@
 #include "Arbolzeinador.h"
 #include "Split.h"
 #include "variables.h"
+//declaracion de variables y estructuras
 void yyerror(const char *s);
 extern FILE *yyin;
 extern int yylineno;
@@ -13,6 +14,7 @@ char *values_cond = NULL;
 char tipo;
 int acum;
 int *havepoint,IsaINt,conditionres,flagcondition,Else_res,acu,In_While,flag_While_condition;
+//metodos de asignacion valores a las banderas
 void setInsideWhile(int val){
 	In_While = val;
 }
@@ -34,6 +36,7 @@ void setacu(int plus){
 
 struct TreeNode* root = NULL;
 ASTNode *ArbolWhile=NULL;
+//tokens y algunas estructuras a utilizar
 %}
 
 %token PLUS MINUS MULTIPLY DIVIDE LPAREN RPAREN ASSIGN SEMICOLON COMMILLA SIMPLECOM
@@ -84,24 +87,24 @@ ASTNode *ArbolWhile=NULL;
 %token <TYPELK> INT_TYPE FLOAT_TYPE CHAR_TYPE BOOL_TYPE
 %start program
 %%
-
+//sintaxis de estructura base;
 program : READY empty_block END
 		| function_declaration READY empty_block END
 		| /* empty */
         ;
-
+//estructura del empty_block
 empty_block: LBRACE RBRACE
 	| LBRACE statementList RBRACE
 	;
 
 function_declaration:
 		;
-
+//statementList puede contener uno o muchos statement
 statementList: statement
 			| statementList statement
 			;
 
-
+//statement son las funciones del programa
 statement : declaration SEMICOLON
           | condition SEMICOLON {setInsideIf(2);}
           | loop
@@ -111,7 +114,7 @@ statement : declaration SEMICOLON
 		  | Write_Statement SEMICOLON
           | error SEMICOLON
           ;
-
+//estructura de las condiciones
 Condition_content: {setInsideIf(1);} statement
 				| Condition_content statement{setInsideIf(1);}
 				;
@@ -122,21 +125,24 @@ Else_content:   statement
 condition: IF LPAREN expression RPAREN LBRACE Condition_content RBRACE
 		| IF LPAREN expression RPAREN LBRACE Condition_content RBRACE ELSE LBRACE Else_content RBRACE
 
-
+//estructura de la declaracion de variables
 declaration : type IDENTIFIER {
 			root=insertNodeWithoutV(root,$2,$1);
 			}
             | type IDENTIFIER LBRACKET NUMBER RBRACKET
             ;
+//tipos de dato aceptados y los datos que manda cada uno
 type : INT_TYPE {$$ = $1;}
 	| FLOAT_TYPE {$$ = $1;}
 	| CHAR_TYPE {tipo= $1;}
 	| BOOL_TYPE{tipo= $1;}
     ;
+// estructura del print
 Write_Statement: WRITE Write_content
 				|WRITE{/*Error message*/ yyerror("Error-Expression: Write content not found please asign content.");
 				return -1;}
 		;
+//funcionamiento del print
 Write_content: COMMILLA Output_text COMMILLA {
 			if(In_While==1){
 				char *text_string= $2;
@@ -207,7 +213,7 @@ conditions: IDENTIFIER{
            | conditions LESSEQUAL conditions{}
            | conditions GREATEREQUAL conditions{}
 ;
-
+//parte del funcionamiento del while
 while_content: {setInsideWhile(1);}statement
 			|while_content {setInsideWhile(1);} statement
 ;
@@ -234,7 +240,7 @@ loop: while_statement {setInsideWhile(0);
 
 
 switch_case:
-
+//funcionamiento de asignacion de variables
 Assign_expression: IDENTIFIER ASSIGN expression{ 
 			if(In_While==1){
 				Find = Find_Val(root,$1);
@@ -312,7 +318,7 @@ Assign_expression: IDENTIFIER ASSIGN expression{
 			}
 			}
 	;
-	
+//funcionamiento de las expresiones 
 expression: INTNUM { havepoint = 1;$<TypesExp.numbf>$ = $1;}
            | NUMBER {
 				havepoint = 0;
@@ -411,11 +417,12 @@ expression: INTNUM { havepoint = 1;$<TypesExp.numbf>$ = $1;}
            
            ;
 			
-
+//gestor de errores
 %%
 void yyerror(const char *s) {
     fprintf(stderr, "Syntax error at line %d: %s\n", yylineno, s);
 }
+//main
 int main(int argc, char **argv) {
     if (argc > 1) {
         FILE *file = fopen(argv[1], "r");

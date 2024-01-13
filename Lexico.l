@@ -1,4 +1,4 @@
-%{
+%{ 
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -6,6 +6,7 @@
 char    texto[];
 %}
 %option yylineno
+//en este segmento agrupamos posibles casos de caracteres aceptados.
 digit   [0-9]
 INTnumber {digit}+
 number  {digit}+(\.{digit}+)
@@ -13,7 +14,7 @@ letter  [a-zA-Z_]
 Text 	[A-za-z]*
 id      {letter}({letter}|{digit})*
 flags   "true"|"false"
-%%
+%%//aqui ya son los filtros que tokenizara el programa
 [ \t\n]+    {}
 "ready"		{ return READY;}
 "end"		{ return END;}

@@ -5,6 +5,7 @@
 #define PRUEBACOMPILADOR_SPLIT_H
 #include <stdlib.h>
 #include <string.h>
+//funcion para separar una cadena de caracteres.
 char **Split(char *cadena, char *delim) {
     char **tokens = NULL;
     int contador = 0;

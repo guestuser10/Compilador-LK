@@ -6,9 +6,13 @@ El compiladorlk es el proyecto de la materia software de sistemas para la Univer
 Es un compilador que utiliza Flex y Bison en C, para compilar por su cuenta instale estas dependencias.
 # índice
 1.- [Estructura](#Estructura)
+
 2.- [Variables](#Variables)
+
 3.- [Imprimir](#Imprimir)
+
 4.- [Condiciones](#Condiciones)
+
 5.- [Ciclos](#Ciclos)
 
 # Estructura
